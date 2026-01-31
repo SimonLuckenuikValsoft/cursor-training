@@ -1,0 +1,16 @@
+# Documentation Directory
+
+This folder is intentionally sparse. Your exercise is to generate documentation here using Cursor.
+
+## Expected Outputs After Training
+
+After completing the documentation exercise, this folder should contain:
+
+- README.md - Overview of the payment service
+- ARCHITECTURE.md - System architecture with Mermaid diagrams
+- API.md - API reference for all exported classes and functions
+- SECURITY.md - Security considerations and fraud detection flow
+
+## Indexing This Folder
+
+In Cursor settings, add this docs/ folder to your indexed paths to enable AI-assisted documentation search.

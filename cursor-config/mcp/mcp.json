@@ -1,0 +1,12 @@
+{
+  "$schema": "https://cursor.sh/schemas/mcp.json",
+  "mcpServers": {
+    "training-tools": {
+      "command": "node",
+      "args": ["./cursor-config/mcp/mcp-server/index.js"],
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  }
+}

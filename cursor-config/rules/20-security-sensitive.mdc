@@ -1,0 +1,100 @@
+---
+description: Security-sensitive code handling for authentication, payments, and PII
+globs: ["**/auth/**/*", "**/payment/**/*", "**/security/**/*", "**/*secret*", "**/*credential*"]
+alwaysApply: false
+---
+
+# Security-Sensitive Code Rule
+
+## Purpose
+This rule applies additional scrutiny to code that handles authentication, payments, secrets, and personally identifiable information (PII).
+
+## Scope
+This rule is triggered for files in:
+- `/auth/` directories
+- `/payment/` directories
+- `/security/` directories
+- Files containing "secret" or "credential" in the name
+
+## Requirements
+
+### Never Commit Secrets
+- No API keys, passwords, or tokens in code
+- Use environment variables or secret managers
+- Add sensitive patterns to `.gitignore`
+
+### Input Validation
+- Validate and sanitize all user input
+- Use parameterized queries for database operations
+- Implement rate limiting on sensitive endpoints
+
+### Authentication
+- Use established libraries (passport, next-auth, etc.)
+- Implement proper session management
+- Enforce strong password policies
+- Add multi-factor authentication for sensitive operations
+
+### Logging
+- Never log sensitive data (passwords, tokens, full card numbers)
+- Mask PII in logs (show last 4 digits only)
+- Include audit trails for security events
+
+## Correct Example
+
+```typescript
+// Good: Environment variables, masked logging, validation
+import { hash, compare } from 'bcrypt';
+
+const API_KEY = process.env.PAYMENT_API_KEY;  // From environment
+
+export class PaymentService {
+  async processPayment(cardNumber: string, amount: number) {
+    // Validate input
+    if (!this.isValidCardNumber(cardNumber)) {
+      throw new ValidationError('Invalid card number format');
+    }
+
+    // Mask for logging
+    const maskedCard = `****-****-****-${cardNumber.slice(-4)}`;
+    this.logger.info(`Processing payment for card ${maskedCard}`);
+
+    // Use parameterized API call
+    return this.gateway.charge({
+      card: cardNumber,  // Only sent to payment provider
+      amount,
+      idempotencyKey: this.generateIdempotencyKey(),
+    });
+  }
+}
+```
+
+## Incorrect Example
+
+```typescript
+// Bad: Hardcoded secrets, no validation, logging sensitive data
+const API_KEY = 'sk_live_abc123xyz789';  // Never hardcode!
+
+export class PaymentService {
+  async processPayment(cardNumber: string, amount: number) {
+    // No input validation - vulnerable to injection
+
+    // Logging full card number - PCI violation!
+    console.log(`Processing card ${cardNumber} for $${amount}`);
+
+    // String interpolation in query - SQL injection risk
+    const query = `INSERT INTO payments (card, amount) VALUES ('${cardNumber}', ${amount})`;
+    
+    return this.db.query(query);
+  }
+}
+```
+
+## Security Checklist
+Before merging security-sensitive code:
+- [ ] No hardcoded secrets
+- [ ] All inputs validated
+- [ ] Sensitive data masked in logs
+- [ ] Rate limiting implemented
+- [ ] Error messages don't leak system details
+- [ ] Authentication required for protected resources
+- [ ] Audit logging in place

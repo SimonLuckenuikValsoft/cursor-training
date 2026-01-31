@@ -1,0 +1,32 @@
+{
+  "name": "debug-browser-agent-exercise",
+  "version": "1.0.0",
+  "description": "Cursor training exercise: Debug mode and Browser Agent for accessibility",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/",
+    "test:a11y": "node scripts/a11y-check.js",
+    "test": "node scripts/a11y-check.js"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "axe-core": "^4.8.4",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jsdom": "^24.0.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12"
+  },
+  "keywords": ["cursor", "training", "accessibility", "browser-agent"]
+}

@@ -1,0 +1,93 @@
+---
+description: Team baseline coding standards and conventions
+globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+alwaysApply: true
+---
+
+# Team Baseline Coding Standards
+
+## Purpose
+This rule establishes baseline coding conventions for the team. It applies to all TypeScript and JavaScript files.
+
+## Standards
+
+### Naming Conventions
+- Use `camelCase` for variables, functions, and methods
+- Use `PascalCase` for classes, interfaces, types, and React components
+- Use `UPPER_SNAKE_CASE` for constants
+- Prefix interfaces with `I` only when needed to avoid naming conflicts
+- Use descriptive names that reveal intent
+
+### Code Organization
+- One export per file for components and classes
+- Group imports: external libraries, then internal modules, then relative imports
+- Keep files under 300 lines; split if larger
+- Place types and interfaces at the top of files or in separate `.types.ts` files
+
+### Error Handling
+- Always handle errors explicitly; never silently catch and ignore
+- Use typed error classes for domain-specific errors
+- Include context in error messages
+- Log errors with sufficient detail for debugging
+
+### Comments and Documentation
+- Document public APIs with JSDoc comments
+- Explain "why" not "what" in inline comments
+- Keep TODOs actionable with owner and context
+- Remove commented-out code before committing
+
+## Correct Example
+
+```typescript
+// Good: Descriptive names, proper structure
+interface UserProfile {
+  id: string;
+  displayName: string;
+  email: string;
+  createdAt: Date;
+}
+
+const MAX_RETRY_ATTEMPTS = 3;
+
+export class UserService {
+  /**
+   * Retrieves a user profile by ID.
+   * @param userId - The unique user identifier
+   * @returns The user profile or null if not found
+   * @throws {DatabaseError} If database connection fails
+   */
+  async getUserById(userId: string): Promise<UserProfile | null> {
+    try {
+      return await this.repository.findById(userId);
+    } catch (error) {
+      throw new DatabaseError(`Failed to fetch user ${userId}`, { cause: error });
+    }
+  }
+}
+```
+
+## Incorrect Example
+
+```typescript
+// Bad: Poor naming, no error handling, no documentation
+interface user {  // Should be PascalCase
+  id: any;        // Avoid any type
+  n: string;      // Non-descriptive name
+}
+
+export class usr {  // Poor class name
+  // Missing JSDoc
+  async get(x: string) {  // Non-descriptive parameter
+    try {
+      return await this.r.find(x);
+    } catch (e) {
+      // Silent failure - never do this
+    }
+  }
+}
+```
+
+## Enforcement
+- This rule is enforced during code review
+- Violations should be flagged by Cursor during editing
+- Critical violations block merge approval
