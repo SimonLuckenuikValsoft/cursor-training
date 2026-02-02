@@ -1,0 +1,36 @@
+{
+  "$schema": "https://cursor.sh/schemas/commands.json",
+  "version": "1.0",
+  "commands": [
+    {
+      "name": "plan-change",
+      "description": "Create a structured plan with risk assessment before making changes",
+      "prompt": "I need to make changes to the codebase. Before proceeding, create a detailed plan:\n\n## Change Summary\nBriefly describe what needs to change and why.\n\n## Files Affected\nList all files that will be created, modified, or deleted.\n\n## Implementation Steps\n1. Step-by-step breakdown of the changes\n2. Include specific code locations\n3. Note any dependencies between steps\n\n## Risk Assessment\n| Risk | Likelihood | Impact | Mitigation |\n|------|------------|--------|------------|\n| (e.g., Breaking existing tests) | Low/Med/High | Low/Med/High | (How to prevent) |\n\n## Rollback Plan\nHow to revert these changes if something goes wrong.\n\n## Testing Strategy\n- What tests need to be added?\n- What existing tests need updates?\n- Manual testing steps?\n\n## Checklist Before Implementation\n- [ ] All affected files identified\n- [ ] Tests planned for new functionality\n- [ ] Breaking changes documented\n- [ ] Rollback procedure defined\n\nNow analyze the request and provide this plan.",
+      "category": "planning"
+    },
+    {
+      "name": "doc-update",
+      "description": "Generate or update documentation with Mermaid diagrams",
+      "prompt": "Update the documentation for this codebase:\n\n## Documentation Tasks\n\n### 1. README Update\nGenerate or update the README.md with:\n- Project overview\n- Installation instructions\n- Quick start guide\n- Configuration options\n\n### 2. Architecture Diagram\nCreate a Mermaid diagram showing:\n- Main components and their relationships\n- Data flow between modules\n- External integrations\n\nUse this format:\n```mermaid\ngraph TD\n    A[Component A] --> B[Component B]\n    B --> C[Component C]\n```\n\n### 3. Sequence Diagram\nFor the main user flow, create a sequence diagram:\n```mermaid\nsequenceDiagram\n    participant User\n    participant System\n    User->>System: Request\n    System-->>User: Response\n```\n\n### 4. API Documentation\nFor each public function/method:\n- Description\n- Parameters with types\n- Return value\n- Example usage\n\n### 5. Changelog Entry\nIf there are recent changes, draft a changelog entry.\n\nAnalyze the current codebase and generate appropriate documentation.",
+      "category": "documentation"
+    },
+    {
+      "name": "code-review",
+      "description": "Perform a structured code review with security and quality checks",
+      "prompt": "Perform a comprehensive code review on the selected code or recent changes:\n\n## Code Review Checklist\n\n### 1. Correctness\n- [ ] Logic is correct and handles edge cases\n- [ ] Error handling is appropriate\n- [ ] No obvious bugs or typos\n\n### 2. Security\n- [ ] No hardcoded secrets or credentials\n- [ ] Input validation is present\n- [ ] No SQL injection or XSS vulnerabilities\n- [ ] Sensitive data is properly handled\n\n### 3. Performance\n- [ ] No unnecessary loops or computations\n- [ ] Database queries are optimized\n- [ ] No memory leaks\n\n### 4. Maintainability\n- [ ] Code is readable and well-organized\n- [ ] Functions are appropriately sized\n- [ ] Naming is clear and consistent\n- [ ] Comments explain 'why' not 'what'\n\n### 5. Testing\n- [ ] Tests cover the changes\n- [ ] Edge cases are tested\n- [ ] Tests are readable and maintainable\n\n### 6. Documentation\n- [ ] Public APIs are documented\n- [ ] Complex logic is explained\n- [ ] README is updated if needed\n\n## Review Summary\nProvide:\n1. Critical issues (must fix)\n2. Suggestions (should consider)\n3. Positive observations\n4. Overall assessment\n\nAnalyze the code and provide the review.",
+      "category": "review"
+    },
+    {
+      "name": "fix-lint",
+      "description": "Fix linting errors and format code according to team standards",
+      "prompt": "Analyze the current file or selection for linting issues and code style violations:\n\n1. **Identify Issues**\n   - ESLint/TypeScript errors\n   - Formatting inconsistencies\n   - Naming convention violations\n   - Import organization problems\n\n2. **Apply Fixes**\n   - Fix all auto-fixable issues\n   - Suggest manual fixes for complex problems\n   - Organize imports (external, internal, relative)\n   - Apply consistent formatting\n\n3. **Report**\n   - List what was fixed\n   - List what needs manual attention\n   - Suggest preventive measures\n\nFix the issues and explain what was changed.",
+      "category": "maintenance"
+    },
+    {
+      "name": "explain-code",
+      "description": "Generate a detailed explanation of selected code",
+      "prompt": "Explain the selected code in detail:\n\n## Code Explanation\n\n### Overview\nWhat does this code do at a high level?\n\n### Step-by-Step Breakdown\nWalk through the code line by line or block by block:\n1. What happens first?\n2. What are the key operations?\n3. What is the final output?\n\n### Key Concepts\n- Programming patterns used (e.g., factory, observer)\n- Language features leveraged\n- Libraries or frameworks involved\n\n### Data Flow\nHow does data move through this code?\n\n### Potential Issues\n- Edge cases to be aware of\n- Performance considerations\n- Common mistakes when modifying\n\n### Related Code\nWhat other parts of the codebase interact with this?\n\nProvide a thorough explanation suitable for a developer unfamiliar with this code.",
+      "category": "learning"
+    }
+  ]
+}
